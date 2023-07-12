@@ -23,3 +23,35 @@ ggplot(data = EGYPV2016TNF) +
   xlab("LogGFN") +
   ylab("") +
   ggtitle("Densidades del LogGFN por Zona")+facet_wrap(~ Zona1, nrow = 2)
+## Gráficos de otros casos
+library(tidyverse)
+library(tidyquant)
+library(ggdist)
+library(ggthemes)
+EGYPV2016TNF %>% 
+  filter(Zona1 %in% c("Zona Centro", "Zona Insular", "Zona Norte","Zona Occidental","Zona Oriental","Zona Sur","Desconocido")) %>% 
+  ggplot(aes(x = factor(Zona1), y = LogGFN, fill = factor(Zona1)))+
+  # add half-violin from {ggdist} package
+  stat_halfeye(
+    # adjust bandwidth
+    adjust = 0.5,
+    # move to the right
+    justification = -0.2,
+    # remove the slub interval
+    .width = 0,
+    point_colour = NA
+  ) +
+  geom_boxplot(
+    width = 0.12,
+    # removing outliers
+    outlier.color = NA,
+    alpha = 0.5
+  )+
+  theme_tq() +
+  labs(
+    title = "Densidades y Box-plots del LogGFN por Zona",
+    x = "LogGFN",
+    y = "",
+    fill = "Zonas"
+  ) +
+  coord_flip()
