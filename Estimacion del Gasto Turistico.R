@@ -55,3 +55,35 @@ EGYPV2016TNF %>%
     fill = "Zonas"
   ) +
   coord_flip()
+
+### Grafico Por Regiones
+EGYPV2016TNF %>% 
+  filter(RegRes %in% c("Centroamérica", "Europa", "Norteamérica","Resto del Mundo")) %>% 
+  ggplot(aes(x = factor(RegRes), y = LogGFN, fill = factor(RegRes)))+
+  
+  # add half-violin from {ggdist} package
+  stat_halfeye(
+    # adjust bandwidth
+    adjust = 0.5,
+    # move to the right
+    justification = -0.2,
+    # remove the slub interval
+    .width = 0,
+    point_colour = NA
+  ) +
+  geom_boxplot(
+    width = 0.12,
+    # removing outliers
+    outlier.color = NA,
+    alpha = 0.5
+  ) +
+  # Themes and Labels
+  scale_fill_tq() +
+  theme_tq() +
+  labs(
+    title = "Densidades y Box-plots del LogGFN por Region de Residencia",
+    x = "",
+    y = "Gasto Logritmico",
+    fill = "Zonas"
+  ) +
+  coord_flip()
