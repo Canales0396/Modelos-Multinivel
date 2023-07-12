@@ -83,7 +83,7 @@ EGYPV2016TNF %>%
   labs(
     title = "Densidades y Box-plots del LogGFN por Region de Residencia",
     x = "",
-    y = "Gasto Logritmico",
+    y = "Gasto Logaritmico",
     fill = "Zonas"
   ) +
   coord_flip()
