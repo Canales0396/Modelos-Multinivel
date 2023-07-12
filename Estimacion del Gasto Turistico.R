@@ -3,7 +3,7 @@ library(haven)
 library(foreign)
 EGYPV2016Turistas <- read.spss("EGYPV 2016 F01 - Turistas.sav")
 EGYPV2016Turistas<-data.frame(EGYPV2016Turistas)
-## Filtrado de las variables que se necesitan para la estimación EGYPV2016TN<-subset(EGYPV2016Turistas,select = c(Validas, TipViajero,TipVisitante,Mes,CodRes,RegRes,CodPrimVisita,P29_Mu4,
+## Filtrado de las variables que se necesitan para la estimación 
 EGYPV2016TN<-subset(EGYPV2016Turistas,select = c(Validas, TipViajero,TipVisitante,Mes,CodRes,RegRes,CodPrimVisita,P29_Mu4,
                                                  GruViaje,P10_3NumNoch,Pernocto,GruNoch,P11_THoteles,P11_TAmigos,P11_TAlojP,
                                                  CodTipMot,CodModViaje,P28_Total,CodEstCivil,P9_GruViaje,P10_Pernocto,
