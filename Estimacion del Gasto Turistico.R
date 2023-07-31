@@ -87,3 +87,20 @@ EGYPV2016TNF %>%
     fill = "Zonas"
   ) +
   coord_flip()
+
+
+# Graficos del gasto  final por zonas
+library(ggridges)
+library(ggplot2)
+# basic example
+ggplot(EGYPV2016TNF, aes(x = GastoFinN, y = Zona1, fill = Zona1)) +
+  geom_density_ridges() +
+  theme_ridges() + 
+  theme(legend.position = "none")+
+  labs(
+    title = "Densidades del gasto final por Zonas",
+    x = "",
+    y = "Gasto Final",
+    fill = "Zonas"
+  ) 
+
