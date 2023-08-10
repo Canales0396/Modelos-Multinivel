@@ -31,7 +31,7 @@ library(ggthemes)
 EGYPV2016TNF %>% 
   filter(Zona1 %in% c("Zona Centro", "Zona Insular", "Zona Norte","Zona Occidental",
                       "Zona Oriental","Zona Sur","Desconocido")) %>% 
-  ggplot(aes(x = factor(Zona1), y = LogGFN, fill = factor(Zona1)))+
+  ggplot(aes(x = factor(Zona1), y =LogGFN, fill = factor(Zona1)))+
   # add half-violin from {ggdist} package
   stat_halfeye(
     # adjust bandwidth
@@ -50,9 +50,9 @@ EGYPV2016TNF %>%
   )+
   theme_tq() +
   labs(
-    title = "Densidades y Box-plots del LogGFN por Zona",
-    x = "LogGFN",
-    y = "",
+    title = "Densidades y Box-plot",
+    x = "",
+    y = "Gasto Logaritmico",
     fill = "Zonas"
   ) +
   coord_flip()
@@ -76,7 +76,7 @@ EGYPV2016TNF %>%
     width = 0.12,
     # removing outliers
     outlier.color = NA,
-    alpha = 0.5
+    alpha = 1
   ) +
   # Themes and Labels
   scale_fill_tq() +
@@ -104,6 +104,7 @@ ggplot(EGYPV2016TNF, aes(x = GastoFinN, y = Zona1, fill = Zona1)) +
     y = "",
     fill = "Zonas"
   ) 
+  
 ### Calculo de las estadisticas descriptivas de la variables GastoFin
 ### y por Zonas respectivamente
 
@@ -127,7 +128,6 @@ EGYP2<-subset(EGYPV2016TNF,GastoFin < 700)
 resumen_zonas <- EGYPV2016TNF %>%
   group_by(Zona1) %>%
   summarise(
-    count(),
     q1 = quantile(GastoFin, 0.25,na.rm = TRUE),
     Media = mean(GastoFin, na.rm = TRUE),
     Mediana = median(GastoFin, na.rm = TRUE),
@@ -139,4 +139,52 @@ resumen_zonas <- EGYPV2016TNF %>%
     Curtosis=kurtosis(GastoFin,na.rm=TRUE)
   )
 print(resumen_zonas)
+
+resumen_zonas1 <- EGYPV2016TNF %>%
+  group_by(Zona1) %>%
+  count()
+print(resumen_zonas1)
+boxplot(GastoFinN)
+
+##Correccion de los graficos
+
+library(tidyverse)
+library(tidyquant)
+library(ggdist)
+library(ggthemes)
+EGYPV2016TNF %>% 
+  filter(Zona1 %in% c("Zona Centro", "Zona Insular", "Zona Norte","Zona Occidental",
+                      "Zona Oriental","Zona Sur","Desconocido")) %>% 
+  ggplot(aes(x = factor(Zona1), y =LogGFN, fill = factor(Zona1)))+
+  # add half-violin from {ggdist} package
+  stat_halfeye(
+    # adjust bandwidth
+    adjust = 0.5,
+    # move to the right
+    justification = -0.2,
+    # remove the slub interval
+    .width = 0,
+    point_colour = NA
+  ) +
+  geom_boxplot(
+    width = 0.12,
+    # removing outliers
+    outlier.color = NA,
+    alpha = 0.5
+  )+
+  theme_tq() +
+  labs(
+    title = "Densidades y Box-plot",
+    x = "",
+    y = "Gasto Logaritmico",
+    fill = "Zonas"
+  ) +
+  coord_flip()
+
+
+
+
+
+
+
 
