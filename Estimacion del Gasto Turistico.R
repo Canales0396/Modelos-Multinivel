@@ -1,7 +1,7 @@
 ## Limpieza de la base datos EGYPV2016Turistas
 library(haven)
 library(foreign)
-EGYPV2016Turistas <- read.spss("EGYPV 2016 F01 - Turistas.sav")
+EGYPV2016Turistas <- read.spss("Datos/EGYPV 2016 F01 - Turistas.sav")
 EGYPV2016Turistas<-data.frame(EGYPV2016Turistas)
 ## Filtrado de las variables que se necesitan para la estimación 
 EGYPV2016TN<-subset(EGYPV2016Turistas,select = c(Validas, TipViajero,TipVisitante,Mes,CodRes,RegRes,CodPrimVisita,P29_Mu4,
@@ -29,7 +29,8 @@ library(tidyquant)
 library(ggdist)
 library(ggthemes)
 EGYPV2016TNF %>% 
-  filter(Zona1 %in% c("Zona Centro", "Zona Insular", "Zona Norte","Zona Occidental","Zona Oriental","Zona Sur","Desconocido")) %>% 
+  filter(Zona1 %in% c("Zona Centro", "Zona Insular", "Zona Norte","Zona Occidental",
+                      "Zona Oriental","Zona Sur","Desconocido")) %>% 
   ggplot(aes(x = factor(Zona1), y = LogGFN, fill = factor(Zona1)))+
   # add half-violin from {ggdist} package
   stat_halfeye(
@@ -100,7 +101,9 @@ ggplot(EGYPV2016TNF, aes(x = GastoFinN, y = Zona1, fill = Zona1)) +
   labs(
     title = "Densidades del gasto final por Zonas",
     x = "",
-    y = "Gasto Final",
+    y = "",
     fill = "Zonas"
   ) 
+
+
 
