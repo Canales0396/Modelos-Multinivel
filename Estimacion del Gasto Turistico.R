@@ -104,6 +104,39 @@ ggplot(EGYPV2016TNF, aes(x = GastoFinN, y = Zona1, fill = Zona1)) +
     y = "",
     fill = "Zonas"
   ) 
+### Calculo de las estadisticas descriptivas de la variables GastoFin
+### y por Zonas respectivamente
+
+summary(EGYPV2016TNF$GastoFin)
+##Desviacion
+sd(GastoFinN,na.rm = TRUE)
+## Asimetria
+skewness(GastoFinN)
+## Curtosis
+kurtosis(GastoFinN)
 
 
+## Resumen de los turisticas de cuantas noches pernotaron en el pais
+summary(EGYPV2016TNF$P10_3NumNoch)
+## Base para identificar los turistas que gastaron arriba y menos de 700 dolares
+
+EGYP1<-subset(EGYPV2016TNF,GastoFin > 700)
+EGYP2<-subset(EGYPV2016TNF,GastoFin < 700)
+
+## Estadística Descriptivas por Zonas
+resumen_zonas <- EGYPV2016TNF %>%
+  group_by(Zona1) %>%
+  summarise(
+    count(),
+    q1 = quantile(GastoFin, 0.25,na.rm = TRUE),
+    Media = mean(GastoFin, na.rm = TRUE),
+    Mediana = median(GastoFin, na.rm = TRUE),
+    DesvEstandar = sd(GastoFin, na.rm = TRUE),
+    q3 = quantile(GastoFin, 0.75,na.rm = TRUE),
+    Minimo = min(GastoFin, na.rm = TRUE),
+    Maximo = max(GastoFin, na.rm = TRUE),
+    asimetria=skewness(GastoFin,na.rm = TRUE),
+    Curtosis=kurtosis(GastoFin,na.rm=TRUE)
+  )
+print(resumen_zonas)
 
