@@ -217,8 +217,83 @@ EGYPV2016TNF %>%
   theme_tq() +
   theme(plot.title = element_text(hjust = 0.5)) 
 
+###Logaritmico
+library(tidyverse)
+library(tidyquant)
+library(ggdist)
+library(ggthemes)
+EGYPV2016TNF %>% 
+  filter(Zona1 %in% c("Zona Centro", "Zona Insular", "Zona Norte","Zona Occidental",
+                      "Zona Oriental","Zona Sur","Desconocido")) %>% 
+  ggplot(aes(x = factor(Zona1), y=GastoFinN, fill = factor(Zona1)))+
+  # add half-violin from {ggdist} package
+  stat_halfeye(
+    # adjust bandwidth
+    adjust = 0.5,
+    # move to the right
+    justification = -0.2,
+    # remove the slub interval
+    .width = 0,
+    point_colour = NA
+  ) +
+  geom_boxplot(
+    width = 0.12,
+    # removing outliers
+    outlier.color = NA,
+    alpha = 0.5
+  )+
+  theme_tq() +
+  labs(
+    title = "Densidades y Box-plot",
+    x = "",
+    y = "Gasto Logaritmico",
+    fill = "Zonas"
+  ) +
+  coord_flip()+
+  theme(legend.position ="right",plot.title = element_text(hjust = 0.5))
+
+## Boxplot por zonas del gasto turistico
+
+EGYPV2016TNF %>% 
+  filter(Zona1 %in% c("Zona Centro", "Zona Insular", "Zona Norte","Zona Occidental",
+                      "Zona Oriental","Zona Sur","Desconocido"),
+         GastoFin>=200, GastoFin<= 2000) %>% 
+  ggplot(aes(x = factor(Zona1), y =GastoFin, fill = factor(Zona1)))+
+  # add half-violin from {ggdist} package
+  stat_halfeye(
+    # adjust bandwidth
+    adjust = 0.5,
+    # move to the right
+    justification = -0.2,
+    # remove the slub interval
+    .width = 0,
+    point_colour = NA
+  )+
+  geom_boxplot(
+    width = 0.12,
+    # removing outliers
+    outlier.color = NA,
+    alpha = 0.5
+  )+
+  theme_tq() +
+  labs(
+    title = "Densidades y Box-plot",
+    x = "",
+    y = "Gasto ",
+    fill = "Zonas"
+  )+ 
+  coord_flip()+
+  theme(legend.position ="right",plot.title = element_text(hjust = 0.5))
 
 
+##Prueba del modelo log-shew-normal
+library(brms)
+model1 <- brm(log(GastoFin) ~ Zona1, family = skew_normal(), data = EGYPV2016TNF)
+
+# Resumen del modelo ajustado
+summary(model1)
+
+plot(model1)
 
 
 
