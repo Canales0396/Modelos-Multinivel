@@ -295,7 +295,7 @@ summary(model1)
 
 plot(model1)
 
-###Grafico de Densidades
+
 
 library(tidyverse)
 library(tidyquant)
@@ -331,4 +331,24 @@ EGYPV2016TNF %>%
   ) +
   coord_flip()+
   theme(legend.position ="right",plot.title = element_text(hjust = 0.5))
+
+#### Prueba 2
+library(brms)
+
+# Supongamos que tienes un dataframe 'datos' con las variables 'LogGFN' y 'Zona'
+
+# Definir el modelo multinivel en brms sin covariables
+model2 <- brm(
+ log(GastoFin) ~(1|Zona1),  # Modelo multinivel con efectos aleatorios por zona
+  family = skew_normal(),
+  data = EGYPV2016TNF
+)
+
+# Imprimir el resumen del modelo
+summary(model2)
+
+
+
+
+
 
