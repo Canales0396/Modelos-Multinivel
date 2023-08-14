@@ -343,7 +343,7 @@ model2 <- brm(
   family = skew_normal(),
   data = EGYPV2016TNF
 )
-
+d
 # Imprimir el resumen del modelo
 summary(model2)
 
