@@ -273,7 +273,7 @@ EGYPV2016TNF %>%
     width = 0.12,
     # removing outliers
     outlier.color = NA,
-    alpha = 0.5
+    alpha = 0.7
   )+
   theme_tq() +
   labs(
@@ -295,6 +295,40 @@ summary(model1)
 
 plot(model1)
 
+###Grafico de Densidades
 
+library(tidyverse)
+library(tidyquant)
+library(ggdist)
+library(ggthemes)
 
+EGYPV2016TNF %>% 
+  filter(GastoFin>= 200, GastoFin <= 3000) %>%
+  ggplot(aes(x = "", y=GastoFin))+
+  # add half-violin from {ggdist} package
+  stat_halfeye(
+    # adjust bandwidth
+    adjust = 0.5,
+    # move to the right
+    justification = -0.2,
+    # remove the slub interval
+    .width = 0,
+    point_colour = NA,
+    alpha=0.7,
+    fill="#61D04F"
+  )+
+  geom_boxplot(
+    width = 0.12,
+    alpha = 0.7,
+    fill="#61D04F",
+    outlier.color = "red"
+  )+
+  theme_tq() +
+  labs(
+    title = "Gráfico de densidad y caja",
+    x = "",
+    y = "Gasto",
+  ) +
+  coord_flip()+
+  theme(legend.position ="right",plot.title = element_text(hjust = 0.5))
 
