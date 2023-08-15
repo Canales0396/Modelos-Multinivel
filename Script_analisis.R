@@ -54,5 +54,5 @@ loo1 = loo(ll1)
 ll2 = fit2$draws(variables = "log_lik",format = "matrix")
 loo2 = loo(ll2)
 
-loo_compare(loo1,loo2)
-
+comp = loo_compare(loo1,loo2)
+print(comp,simplify = FALSE, digits = 3)
