@@ -347,23 +347,6 @@ model2 <- brm(
 # Imprimir el resumen del modelo
 summary(model2)
 
-###Propuesta del Modelo
-library(brms)
-modelo <- brm(
-  log(GastoFin) ~ 1 + (1|Zona1),
-  data = EGYPV2016TNF,
-  family = student,
-  prior = c(
-    prior(normal(0, 10), class = Intercept),
-    prior(student_t(3, 0, 10), class = sigma),
-    prior(gamma(3, 0.10), class = sd)
-    #prior(normal(0, 10), class = b, coef = Zona1)
-  ),
-  chains = 4,
-  iter = 2000
-)
-summary(modelo)
-plot(modelo)
-  
+
 
 
